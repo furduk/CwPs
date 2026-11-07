@@ -1,0 +1,26 @@
+# --- Сборка (Build output) ---
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+
+# --- Состояние Visual Studio (пользовательское) ---
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# --- Файлы, генерируемые отладкой / профилированием ---
+*.pdb
+*.psess
+*.vsp
+
+# --- Результаты тестов ---
+[Tt]est[Rr]esults/
+
+# --- ReSharper (если вдруг используешь) ---
+_ReSharper*/
+*.DotSettings.user
