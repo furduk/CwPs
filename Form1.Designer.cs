@@ -30,17 +30,17 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.CodeTransform = new System.Windows.Forms.Button();
             this.OutPutConsole = new System.Windows.Forms.RichTextBox();
             this.InputCode = new System.Windows.Forms.RichTextBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.trackBarZ = new System.Windows.Forms.TrackBar();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarZ)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -66,21 +66,9 @@
             this.tabPage1.Text = "main";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.trackBarZ);
-            this.tabPage2.Controls.Add(this.pictureBox1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(907, 533);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "visualisator";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
             // CodeTransform
             // 
-            this.CodeTransform.Location = new System.Drawing.Point(8, 322);
+            this.CodeTransform.Location = new System.Drawing.Point(8, 505);
             this.CodeTransform.Name = "CodeTransform";
             this.CodeTransform.Size = new System.Drawing.Size(230, 22);
             this.CodeTransform.TabIndex = 6;
@@ -93,7 +81,7 @@
             this.OutPutConsole.Location = new System.Drawing.Point(458, 6);
             this.OutPutConsole.Name = "OutPutConsole";
             this.OutPutConsole.ReadOnly = true;
-            this.OutPutConsole.Size = new System.Drawing.Size(442, 310);
+            this.OutPutConsole.Size = new System.Drawing.Size(442, 493);
             this.OutPutConsole.TabIndex = 5;
             this.OutPutConsole.Text = "";
             // 
@@ -101,9 +89,29 @@
             // 
             this.InputCode.Location = new System.Drawing.Point(8, 6);
             this.InputCode.Name = "InputCode";
-            this.InputCode.Size = new System.Drawing.Size(444, 310);
+            this.InputCode.Size = new System.Drawing.Size(444, 493);
             this.InputCode.TabIndex = 4;
             this.InputCode.Text = "";
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.trackBarZ);
+            this.tabPage2.Controls.Add(this.pictureBox1);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(907, 533);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "visualisator";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // trackBarZ
+            // 
+            this.trackBarZ.Location = new System.Drawing.Point(8, 496);
+            this.trackBarZ.Name = "trackBarZ";
+            this.trackBarZ.Size = new System.Drawing.Size(892, 45);
+            this.trackBarZ.TabIndex = 1;
+            this.trackBarZ.Scroll += new System.EventHandler(this.trackBarZ_Scroll);
             // 
             // pictureBox1
             // 
@@ -114,14 +122,6 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
-            // 
-            // trackBarZ
-            // 
-            this.trackBarZ.Location = new System.Drawing.Point(8, 496);
-            this.trackBarZ.Name = "trackBarZ";
-            this.trackBarZ.Size = new System.Drawing.Size(892, 45);
-            this.trackBarZ.TabIndex = 1;
-            this.trackBarZ.Scroll += new System.EventHandler(this.trackBarZ_Scroll);
             // 
             // Form1
             // 
@@ -137,8 +137,8 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarZ)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
