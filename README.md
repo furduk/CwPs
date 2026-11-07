@@ -2,6 +2,8 @@
 
 > **Disclaimer:** This README was written by **DeepSeek**, because the author was too lazy to write a giant wall of text himself. All the code, sweat, and 5 hours of suffering — that's his. 😄
 
+![README - RU версия](README-ru.md)
+
 A tiny 3D voxel interpreter / visualizer written in C# WinForms, where a heroic cockroach with pockets wanders through a 50×50×50 grid of bytes, executing a custom stack-based scripting language.
 
 ---
