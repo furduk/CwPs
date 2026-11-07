@@ -142,9 +142,9 @@ Vertical rotation (`^` / `v`) takes priority over horizontal. When `^` or `v` is
 
 ---
 
-## 📜 License
+## License
 
-None. It's a one-evening joke project — who's going to need a cockroach interpreter besides themselves, honestly? Fork it, break it, feed it to your own cockroach. No warranty, no lawyers, no promises. 🪳
+MIT © 2026 furduk
 
 ---
 
