@@ -8,10 +8,6 @@ A tiny 3D voxel interpreter / visualizer written in C# WinForms, where a heroic 
 
 ---
 
-## 📸 Screenshots
-
-> _(the author will add these later — placeholders left on purpose)_
-
 ### The Code Editor
 ![Code screenshot](docs/screenshots/code.png)
 *Write your script right inside the app.*
