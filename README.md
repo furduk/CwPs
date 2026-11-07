@@ -155,4 +155,7 @@ None. It's a one-evening joke project — who's going to need a cockroach interp
 - **Author:** the human who wrote this in 5 hours and now needs a break
 - **README author:** DeepSeek (who was very confused why the cockroach dances, but didn't ask)
 
+
+Special thanks to DeepSeek from author for writing this README
+
 🪳 Happy scripting! 🪳
