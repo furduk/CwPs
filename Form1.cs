@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 namespace _3DInterpretator
 {
     public partial class Form1 : Form
@@ -20,13 +20,15 @@ namespace _3DInterpretator
         // im recommend to NOT set MaxX,MaxY and MaxZ bigger value than 1000,
         // i read about this, "byte[,,] World" with size 1000x1000x1000 needs 1GB RAM
         // just dont do this if u dont have much ram, (my current pc have only 3GB)
+
+        Random rnd = new Random();
         public const int MaxX = 50;
         public const int MaxY = 50;
         public const int MaxZ = 50;
         private byte[,,] World;
         private Bitmap _screen;
         private Cursor3D cockroach = new Cursor3D();
-        private List<byte> Pockets;
+        private Stack<byte> Pockets;
 
         public Form1()
         {
@@ -37,7 +39,8 @@ namespace _3DInterpretator
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.Image = _screen;
             trackBarZ.Maximum = MaxZ - 1;
-
+            CRposition.Text = "X: None\nY: None\nZ:None";
+            InputCode.Text = Properties.Settings.Default.PreviousUserCode;
         }
 
         private void trackBarZ_Scroll(object sender, EventArgs e)
@@ -54,6 +57,7 @@ namespace _3DInterpretator
 
         private void RenderLayer(int z)
         {
+            CRposition.Text = $"\nX: {cockroach.X}\nY: {cockroach.Y}\nZ:{cockroach.Z}";
             if (z < 0 || z >= MaxZ) return;
 
             for (int y = 0; y < MaxY; y++)
@@ -88,11 +92,14 @@ namespace _3DInterpretator
             cockroach.X = 0;
             cockroach.Y = 0;
             cockroach.Z = 0;
-            Pockets = new List<byte>();
+            Pockets = new Stack<byte>();
             Dictionary<string, int> flags = new Dictionary<string, int>();
 
             int RotationHorizontal = 0;
             int RotationVertical = 0;
+
+            int instructionCount = 0;
+            const int MaxInstructions = 1_000_000;
 
             bool IfCondition = false;
 
@@ -109,11 +116,17 @@ namespace _3DInterpretator
                 string[] Code = InputCode.Lines;
                 while (LineCount < Code.Length)
                 {
-                
+                    instructionCount++;
+                    if (instructionCount > MaxInstructions)
+                    {
+                        OutPut.Append("\n[ERROR] Infinite loop detected! Execution aborted.\n");
+                        break;
+                    }
+
                     string Line = Code[LineCount];
                 loopstart:;
                     string[] NewLine = Line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    if (NewLine.Length == 0) { goto NextLine; } // Пропускаем пустые строки
+                    if (NewLine.Length == 0 || Line.Substring(0,2) == "//") { goto NextLine; } // Пропускаем пустые строки и комментарии
                     switch (NewLine[0].ToLower())
                     {
                         case "<":
@@ -133,31 +146,56 @@ namespace _3DInterpretator
 
                         case "bring":
                             byte bit = World[cockroach.X, cockroach.Y, cockroach.Z];
-                            Pockets.Add(bit);
+                            Pockets.Push(bit);
                             World[cockroach.X, cockroach.Y, cockroach.Z] = 0;
                             goto NextLine;
 
                         case "chpk":
-                            OutPut.Append($"current Pocket = {Pockets.Last()}\n");
+                            OutPut.Append($"current Pocket = {Pockets.Peek()}\n");
                             goto NextLine;
 
-                        case "pmusor":
-                            Pockets.RemoveAt(Pockets.Count() - 1);
+                        case "ppop":
+                            Pockets.Pop();
                             goto NextLine;
 
                         case "drop":
-                            World[cockroach.X, cockroach.Y, cockroach.Z] = Pockets.Last();
-                            Pockets.RemoveAt(Pockets.Count() - 1);
+                            World[cockroach.X, cockroach.Y, cockroach.Z] = Pockets.Peek();
+                            Pockets.Pop();
                             goto NextLine;
 
                         case "padd":
-                            World[cockroach.X, cockroach.Y, cockroach.Z] += Pockets.Last();
-                            Pockets.RemoveAt(Pockets.Count() - 1);
+                            World[cockroach.X, cockroach.Y, cockroach.Z] += Pockets.Peek();
+                            Pockets.Pop();
                             goto NextLine;
 
                         case "psub":
-                            World[cockroach.X, cockroach.Y, cockroach.Z] -= Pockets.Last();
-                            Pockets.RemoveAt(Pockets.Count() - 1);
+                            World[cockroach.X, cockroach.Y, cockroach.Z] -= Pockets.Peek();
+                            Pockets.Pop();
+                            goto NextLine;
+
+                        case "pdup":
+                            Pockets.Push(Pockets.Peek());
+                            goto NextLine;
+
+                        case "pswap":
+                            if (Pockets.Count >= 2)
+                            {
+                                byte top = Pockets.Pop();
+                                byte second = Pockets.Pop();
+                                Pockets.Push(top);
+                                Pockets.Push(second);
+                            }
+                            goto NextLine;
+
+                        case "rand":
+                            World[cockroach.X, cockroach.Y, cockroach.Z] = (byte)rnd.Next(0, 256);
+                            goto NextLine;
+
+                        case "pand":
+                            World[cockroach.X, cockroach.Y, cockroach.Z] &= Pockets.Pop();
+                            goto NextLine;
+                        case "por":
+                            World[cockroach.X, cockroach.Y, cockroach.Z] |= Pockets.Pop();
                             goto NextLine;
 
                         case "crd": // debugging
@@ -172,7 +210,7 @@ namespace _3DInterpretator
                         case "set":
                             if (NewLine[1] == "p")
                             {
-                                World[cockroach.X, cockroach.Y, cockroach.Z] = Pockets.Last(); // Упадет, если пусто, но мы же любим fail-fast!
+                                World[cockroach.X, cockroach.Y, cockroach.Z] = Pockets.Peek(); // Упадет, если пусто, но мы же любим fail-fast!
                             }
                             else
                             {
@@ -255,18 +293,11 @@ namespace _3DInterpretator
 
 
                         case "move":
-                            // нафиг отдельные методы, мне легче case"move" переписать
                             // Vertical movement is a priority.
                             int steps = 1;
-                            // кастыль1.1
-                            try
+                            if (NewLine.Length > 1 && int.TryParse(NewLine[1], out int parsedSteps))
                             {
-                                steps = int.Parse(NewLine[1]);
-                            }
-                            catch(Exception ex)
-                            {
-                                // кастыль1.2 чтобы всё не сломалось
-                                string _ = ex.ToString();
+                                steps = parsedSteps;
                             }
                             switch (RotationVertical)
                             {
@@ -315,6 +346,7 @@ namespace _3DInterpretator
             }
 
             OutPutConsole.Text = OutPut.ToString();
+            RenderLayer(trackBarZ.Value);
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
@@ -328,6 +360,36 @@ namespace _3DInterpretator
 
             // Рисуем нашу картинку, растягивая её на весь PictureBox
             e.Graphics.DrawImage(_screen, pictureBox1.ClientRectangle);
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.PreviousUserCode = InputCode.Text;
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            using (SaveFileDialog sfd = new SaveFileDialog())
+            {
+                sfd.Filter = "Cockroach Script (*.cwp)|*.cwp|Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+                sfd.DefaultExt = "cwp";
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    System.IO.File.WriteAllText(sfd.FileName, InputCode.Text);
+                }
+            }
+        }
+
+        private void btnLoad_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                ofd.Filter = "Cockroach Script (*.cwp)|*.cwp|Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    InputCode.Text = System.IO.File.ReadAllText(ofd.FileName);
+                }
+            }
         }
     }
 }

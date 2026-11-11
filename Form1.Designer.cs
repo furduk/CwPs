@@ -36,6 +36,10 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.trackBarZ = new System.Windows.Forms.TrackBar();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.unusedLabel1 = new System.Windows.Forms.Label();
+            this.CRposition = new System.Windows.Forms.Label();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.btnLoad = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -55,6 +59,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.btnLoad);
+            this.tabPage1.Controls.Add(this.btnSave);
             this.tabPage1.Controls.Add(this.CodeTransform);
             this.tabPage1.Controls.Add(this.OutPutConsole);
             this.tabPage1.Controls.Add(this.InputCode);
@@ -72,7 +78,7 @@
             this.CodeTransform.Name = "CodeTransform";
             this.CodeTransform.Size = new System.Drawing.Size(230, 22);
             this.CodeTransform.TabIndex = 6;
-            this.CodeTransform.Text = "button1";
+            this.CodeTransform.Text = "Execute Code";
             this.CodeTransform.UseVisualStyleBackColor = true;
             this.CodeTransform.Click += new System.EventHandler(this.CodeTransform_Click);
             // 
@@ -95,6 +101,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.CRposition);
+            this.tabPage2.Controls.Add(this.unusedLabel1);
             this.tabPage2.Controls.Add(this.trackBarZ);
             this.tabPage2.Controls.Add(this.pictureBox1);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
@@ -109,7 +117,7 @@
             // 
             this.trackBarZ.Location = new System.Drawing.Point(8, 496);
             this.trackBarZ.Name = "trackBarZ";
-            this.trackBarZ.Size = new System.Drawing.Size(892, 45);
+            this.trackBarZ.Size = new System.Drawing.Size(755, 45);
             this.trackBarZ.TabIndex = 1;
             this.trackBarZ.Scroll += new System.EventHandler(this.trackBarZ_Scroll);
             // 
@@ -117,11 +125,49 @@
             // 
             this.pictureBox1.Location = new System.Drawing.Point(8, 6);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(892, 484);
+            this.pictureBox1.Size = new System.Drawing.Size(755, 484);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
+            // 
+            // unusedLabel1
+            // 
+            this.unusedLabel1.AutoSize = true;
+            this.unusedLabel1.Location = new System.Drawing.Point(769, 6);
+            this.unusedLabel1.Name = "unusedLabel1";
+            this.unusedLabel1.Size = new System.Drawing.Size(98, 13);
+            this.unusedLabel1.TabIndex = 2;
+            this.unusedLabel1.Text = "Cockroach position";
+            // 
+            // CRposition
+            // 
+            this.CRposition.AutoSize = true;
+            this.CRposition.Location = new System.Drawing.Point(772, 23);
+            this.CRposition.Name = "CRposition";
+            this.CRposition.Size = new System.Drawing.Size(35, 13);
+            this.CRposition.TabIndex = 3;
+            this.CRposition.Text = "label1";
+            // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(744, 504);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.TabIndex = 7;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // btnLoad
+            // 
+            this.btnLoad.Location = new System.Drawing.Point(825, 504);
+            this.btnLoad.Name = "btnLoad";
+            this.btnLoad.Size = new System.Drawing.Size(75, 23);
+            this.btnLoad.TabIndex = 8;
+            this.btnLoad.Text = "load";
+            this.btnLoad.UseVisualStyleBackColor = true;
+            this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
             // 
             // Form1
             // 
@@ -133,6 +179,7 @@
             this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
@@ -153,6 +200,10 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TrackBar trackBarZ;
+        private System.Windows.Forms.Label unusedLabel1;
+        private System.Windows.Forms.Label CRposition;
+        private System.Windows.Forms.Button btnLoad;
+        private System.Windows.Forms.Button btnSave;
     }
 }
 
