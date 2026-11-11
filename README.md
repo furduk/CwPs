@@ -190,7 +190,7 @@ MIT © 2026 furduk
 
 ## 🙏 Credits
 
-- **Author:** the human who wrote this in 5 hours and now needs a break
+- **Author:** the human who wrote first version in 5 hours and now needs a break
 - **README author:** DeepSeek (who was very confused why the cockroach dances, but didn't ask)
 - **README update:** synchronized with `Form1.cs` and actual interpreter behavior
 
